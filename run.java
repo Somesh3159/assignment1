@@ -2,7 +2,7 @@ package gc;
 import java.io.*;
 import java.sql.*;
 import java.util.*;
-class A{
+class Abc{
 	static String first_name;
 	static String last_name;
 	static String gmail;
@@ -14,7 +14,7 @@ class A{
 		{
 			Class.forName("com.mysql.cj.jdbc.Driver");
 	        con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Banking", "root", "Admin#4321");
-	        PreparedStatement ps = con.prepareStatement("insert into login values(?,?,?,?)");
+	        PreparedStatement ps = con.prepareStatement("insert into login_form values(?,?,?,?)");
 	        Scanner sc = new Scanner(System.in);
 	        System.out.println("Enter the First Name:");
 	        first_name = sc.next();
@@ -41,43 +41,7 @@ class A{
 		}
 		
 	}
-	public static boolean lave()throws SQLException
-	{
-		boolean b = false;
-		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
-	        con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Banking", "root", "Admin#4321");
-	        Scanner sc = new Scanner(System.in);
-	        System.out.println("Enter Mail ID");
-	        String name = sc.next();
-	        System.out.println("Enter the password");
-	        String password = sc.next();
-	        PreparedStatement ps = con.prepareStatement("select * from login_page");
-	        ResultSet rs = ps.executeQuery();
-	        while(rs.next())
-	        {
-	        	String a = rs.getString(3);
-	        	String x = rs.getString(4);
-	        	if(a.equals(name) && x.equals(password))
-	        	{
-	        		b = true;
-	        		return b;
-	        		
-	        	}		
-	        	
-	        }
-		}
-		catch(Exception e){
-			System.out.println(e);
-		}
-		finally {
-			con.close();
-		}
-		return b;
-		
-	}
-	
-}
+
 class B{
 	static int id;
 	static String name;
@@ -141,17 +105,49 @@ class B{
 	        {
 	        	System.out.println(rs.getInt(1)+":"+rs.getString(2)+":"+rs.getInt(6));
 	        }
-	        
+		con.close();
 		}
 		catch(Exception e)
 		{
 			System.out.println(e);
 		}
-		finally
-		{
+		
+	}
+	public static boolean lave()throws SQLException
+	{
+		boolean b = false;
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+	        con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Banking", "root", "Admin#4321");
+	        Scanner sc = new Scanner(System.in);
+	        System.out.println("Enter Mail ID");
+	        String name = sc.next();
+	        System.out.println("Enter the password");
+	        String password = sc.next();
+	        PreparedStatement ps = con.prepareStatement("select * from login_form");
+	        ResultSet rs = ps.executeQuery();
+	        while(rs.next())
+	        {
+	        	String a = rs.getString(3);
+	        	String x = rs.getString(4);
+	        	if(a.equals(name) && x.equals(password))
+	        	{
+	        		b = true;
+	        		return b;
+	        		
+	        	}		
+	        	
+	        }
 			con.close();
 		}
+		catch(Exception e){
+			System.out.println(e);
+		}
+		return b;
+		
 	}
+	
+}
 	public static void Transfer() throws SQLException
 	{
 		try
@@ -169,8 +165,10 @@ class B{
 	        	account = sc1.nextLong();
 	        	System.out.println("Enter the amount to be transfered");
 	        	balance = sc1.nextLong();
+			
 	        	ps.setLong(1, balance);
 	        	ps.setLong(2, account);
+			
 	        	ps.execute();
 	        	PreparedStatement ps2 = con.prepareStatement("update account set balance = balance - ? where id=1");
 	        	ps2.setLong(1, balance);
@@ -185,9 +183,11 @@ class B{
 	        	phone = sc1.nextLong();
 	        	System.out.println("Enter the amount to be transfered");
 	        	balance = sc1.nextLong();
+			
 	        	ps.setLong(1, balance);
 	        	ps.setLong(2, phone);
 	        	ps.execute();
+			
 	        	PreparedStatement ps2 = con.prepareStatement("update account set balance = balance - ? where id=1");
 	        	ps2.setLong(1, balance);
 	        	ps2.execute();
@@ -216,13 +216,11 @@ public class run {
 			int ch = sc.nextInt();
 			if (ch==1)
 			{
-				A.registered();
-				
-				
+				Abc.registered();
 			}
 			else if(ch==2)
 			{
-				if(A.lave()==true)
+				if(Abc.lave()==true)
 				{
 					
 					do {
